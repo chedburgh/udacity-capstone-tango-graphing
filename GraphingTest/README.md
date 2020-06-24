@@ -6,8 +6,6 @@ This is only available when the serverless endpoint is running. If the endpoint 
 
 ## TangoSnmp
 
-![sdf](https://tango-graphing-storage-sjames-dev.s3-eu-west-1.amazonaws.com/HdbppHealthCheck.png)
-
 ![Link error](https://rqsfctr364.execute-api.eu-west-1.amazonaws.com/dev/graph?url=https://gitlab.esrf.fr/accelerators/System/tangosnmp/-/raw/master/TangoSnmp.xmi&format=png)
 
 ## HdbConfigurationManager
