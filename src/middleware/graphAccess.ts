@@ -98,8 +98,6 @@ export async function updateGraph(
 ): Promise<GraphItem> {
   logger.info(`Updating graphId: ${graphId} for userid: ${userId}`);
 
-  // verify graphid
-
   // get the graph item, we are going to remove the existing files in storage
   const graph = await getGraph(userId, graphId);
   graph.updatedAt = new Date().toISOString();

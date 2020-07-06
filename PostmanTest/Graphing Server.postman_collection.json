@@ -429,49 +429,6 @@
 					"name": "Invalid delete",
 					"item": [
 						{
-							"name": "delete No graphId",
-							"request": {
-								"auth": {
-									"type": "oauth2",
-									"oauth2": [
-										{
-											"key": "accessToken",
-											"value": "{{auth_token}}",
-											"type": "string"
-										},
-										{
-											"key": "tokenType",
-											"value": "Bearer",
-											"type": "string"
-										},
-										{
-											"key": "addTokenTo",
-											"value": "header",
-											"type": "string"
-										}
-									]
-								},
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/delete:graphId",
-									"protocol": "https",
-									"host": [
-										"{{endpointId}}",
-										"execute-api",
-										"eu-west-1",
-										"amazonaws",
-										"com"
-									],
-									"path": [
-										"dev",
-										"delete:graphId"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "delete Invalid graphId",
 							"request": {
 								"auth": {
@@ -572,6 +529,72 @@
 										{
 											"key": "graphId",
 											"value": "{{invalid_graph_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Invalid updateGraph",
+					"item": [
+						{
+							"name": "updateGraph No Body",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "accessToken",
+											"value": "{{auth_token}}",
+											"type": "string"
+										},
+										{
+											"key": "tokenType",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/update/:graphId",
+									"protocol": "https",
+									"host": [
+										"{{endpointId}}",
+										"execute-api",
+										"eu-west-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"dev",
+										"update",
+										":graphId"
+									],
+									"variable": [
+										{
+											"key": "graphId",
+											"value": "{{graph_id}}"
 										}
 									]
 								}
@@ -685,7 +708,7 @@
 					"response": []
 				},
 				{
-					"name": "updateGraph",
+					"name": "update",
 					"request": {
 						"auth": {
 							"type": "oauth2",
@@ -719,7 +742,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/updateGraph/:graphId",
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/update/:graphId",
 							"protocol": "https",
 							"host": [
 								"{{endpointId}}",
@@ -730,7 +753,7 @@
 							],
 							"path": [
 								"dev",
-								"updateGraph",
+								"update",
 								":graphId"
 							],
 							"variable": [
@@ -884,27 +907,27 @@
 	],
 	"variable": [
 		{
-			"id": "ee02b80d-4249-4b34-8aa2-6ce3c65fe23f",
+			"id": "6184112f-25b5-4280-a5f9-169ce46ec017",
 			"key": "endpointId",
 			"value": ""
 		},
 		{
-			"id": "c0f84b1b-5c8b-4949-bd64-ae807004e40b",
+			"id": "c0af9c97-f4cf-46e2-9bf3-8a81ad63f8dc",
 			"key": "graph_server",
 			"value": "localhost"
 		},
 		{
-			"id": "e1b57168-29aa-468e-bab4-b9c745907c93",
+			"id": "31faafe6-8ae5-450b-8d02-bb3829aca094",
 			"key": "auth_token",
 			"value": ""
 		},
 		{
-			"id": "10c81299-0a2f-4df6-9e13-e023b1b80260",
+			"id": "8fb6e5ed-94c8-442d-87a5-1fc6b30e1f0a",
 			"key": "graph_id",
 			"value": ""
 		},
 		{
-			"id": "03446f14-7367-4e6d-a4db-b09ea0ba9e94",
+			"id": "71443e99-c4db-4f18-9c8e-f5a121a1cca5",
 			"key": "invalid_graph_id",
 			"value": ""
 		}
