@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    image: chedburgh/tango-device-graphing
+    ports:
+      - "8000:8000"
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: graphing
+        awslogs-region: eu-west-1
+        awslogs-stream-prefix: gra

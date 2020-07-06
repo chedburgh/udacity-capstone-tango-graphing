@@ -1,0 +1,382 @@
+service: tango-graphing
+
+plugins:
+  - serverless-webpack
+  - serverless-iam-roles-per-function
+  - serverless-aws-documentation
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'eu-west-1'}
+
+  environment:
+    SIGNED_URL_EXPIRATION: 300
+    CACHE_BUCKET: tango-graphing-cache-sjames-${self:provider.stage}
+    STORAGE_BUCKET: tango-graphing-storage-sjames-${self:provider.stage}
+    GRAPHING_SERVER_URL: ${self:custom.graphingServerUrl}
+    GRAPH_DATA_LOCAL_INDEX: GraphDataIdIndex-${self:provider.stage}
+    GRAPH_DATA_TABLE: GraphData-${self:provider.stage}
+    GRAPH_DATA_GLOBAL_GRAPHID_INDEX: GraphDataGraphIdIndex-${self:provider.stage}
+
+  tracing:
+    lambda: true
+    apiGateway: true
+
+  iamManagedPolicies:
+    - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+
+custom:
+  documentation:
+    api:
+      info:
+        version: v0.0.1
+        title: Todo ApiGateway
+        description: Serverless Todo application
+
+  graphingServerUrl: ${file(./config.${self:provider.stage}.json):graphingServerUrl}
+
+functions:
+  Graph:
+    handler: src/lambda/http/graph.handler
+    events:
+      - http:
+          method: get
+          path: graph
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                url: true
+                format: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - logs:CreateLogGroup
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+        Resource:
+          - "Fn::Join":
+              - ":"
+              - - "arn:aws:logs"
+                - Ref: "AWS::Region"
+                - Ref: "AWS::AccountId"
+                - "log-group:/aws/lambda/*:*:*"
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+          - s3:GetObject
+        Resource:
+          {
+            "Fn::Join": ["", ["arn:aws:s3:::", { "Ref": "CacheBucket" }, "/*"]],
+          }
+      - Effect: Allow
+        Action:
+          - xray:PutTelemetryRecords
+          - xray:PutTraceSegments
+        Resource: "*"
+
+  CreateGraph:
+    handler: src/lambda/http/createGraph.handler
+    events:
+      - http:
+          method: post
+          path: createGraph
+          cors: true
+          authorizer: Auth
+          request:
+            schema:
+              application/json: ${file(models/create_graph.json)}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - logs:CreateLogGroup
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+        Resource:
+          - "Fn::Join":
+              - ":"
+              - - "arn:aws:logs"
+                - Ref: "AWS::Region"
+                - Ref: "AWS::AccountId"
+                - "log-group:/aws/lambda/*:*:*"
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+          - s3:GetObject
+        Resource:
+          {
+            "Fn::Join":
+              ["", ["arn:aws:s3:::", { "Ref": "StorageBucket" }, "/*"]],
+          }
+      - Effect: Allow
+        Action:
+          - xray:PutTelemetryRecords
+          - xray:PutTraceSegments
+        Resource: "*"
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.GRAPH_DATA_TABLE}
+
+  DeleteGraph:
+    handler: src/lambda/http/deleteGraph.handler
+    events:
+      - http:
+          method: delete
+          path: delete/{graphId}
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - logs:CreateLogGroup
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+        Resource:
+          - "Fn::Join":
+              - ":"
+              - - "arn:aws:logs"
+                - Ref: "AWS::Region"
+                - Ref: "AWS::AccountId"
+                - "log-group:/aws/lambda/*:*:*"
+      - Effect: Allow
+        Action:
+          - s3:DeleteObject
+        Resource:
+          {
+            "Fn::Join":
+              ["", ["arn:aws:s3:::", { "Ref": "StorageBucket" }, "/*"]],
+          }
+      - Effect: Allow
+        Action:
+          - xray:PutTelemetryRecords
+          - xray:PutTraceSegments
+        Resource: "*"
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem
+          - dynamodb:GetItem
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.GRAPH_DATA_TABLE}
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.GRAPH_DATA_TABLE}/index/${self:provider.environment.GRAPH_DATA_GLOBAL_GRAPHID_INDEX}
+
+  GetGraph:
+    handler: src/lambda/http/getGraph.handler
+    events:
+      - http:
+          method: get
+          path: getGraph/{graphId}
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - logs:CreateLogGroup
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+        Resource:
+          - "Fn::Join":
+              - ":"
+              - - "arn:aws:logs"
+                - Ref: "AWS::Region"
+                - Ref: "AWS::AccountId"
+                - "log-group:/aws/lambda/*:*:*"
+      - Effect: Allow
+        Action:
+          - xray:PutTelemetryRecords
+          - xray:PutTraceSegments
+        Resource: "*"
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.GRAPH_DATA_TABLE}
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.GRAPH_DATA_TABLE}/index/${self:provider.environment.GRAPH_DATA_GLOBAL_GRAPHID_INDEX}
+
+  GetGraphs:
+    handler: src/lambda/http/getGraphs.handler
+    events:
+      - http:
+          method: get
+          path: getGraphs
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - logs:CreateLogGroup
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+        Resource:
+          - "Fn::Join":
+              - ":"
+              - - "arn:aws:logs"
+                - Ref: "AWS::Region"
+                - Ref: "AWS::AccountId"
+                - "log-group:/aws/lambda/*:*:*"
+      - Effect: Allow
+        Action:
+          - xray:PutTelemetryRecords
+          - xray:PutTraceSegments
+        Resource: "*"
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.GRAPH_DATA_TABLE}
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.GRAPH_DATA_TABLE}/index/${self:provider.environment.GRAPH_DATA_LOCAL_INDEX}
+
+  UpdateGraph:
+    handler: src/lambda/http/updateGraph.handler
+    events:
+      - http:
+          method: post
+          path: update/{graphId}
+          cors: true
+          authorizer: Auth
+          request:
+            schema:
+              application/json: ${file(models/update_graph.json)}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - logs:CreateLogGroup
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+        Resource:
+          - "Fn::Join":
+              - ":"
+              - - "arn:aws:logs"
+                - Ref: "AWS::Region"
+                - Ref: "AWS::AccountId"
+                - "log-group:/aws/lambda/*:*:*"
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+          - s3:GetObject
+        Resource:
+          {
+            "Fn::Join":
+              ["", ["arn:aws:s3:::", { "Ref": "StorageBucket" }, "/*"]],
+          }
+      - Effect: Allow
+        Action:
+          - xray:PutTelemetryRecords
+          - xray:PutTraceSegments
+        Resource: "*"
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+          - dynamodb:Query
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.GRAPH_DATA_TABLE}
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.GRAPH_DATA_TABLE}/index/${self:provider.environment.GRAPH_DATA_GLOBAL_GRAPHID_INDEX}
+
+  Auth:
+    handler: src/lambda/auth/auth0Authorizer.handler
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: ApiGatewayRestApi
+
+    CacheBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.CACHE_BUCKET}
+        AccessControl: PublicRead
+
+    CacheBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        PolicyDocument:
+          Id: Policy
+          Version: "2012-10-17"
+          Statement:
+            - Sid: PublicReadWriteBucketPolicy
+              Effect: Allow
+              Principal: "*"
+              Action:
+                - s3:GetObject
+              Resource: arn:aws:s3:::${self:provider.environment.CACHE_BUCKET}/*
+        Bucket: !Ref CacheBucket
+
+    StorageBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.STORAGE_BUCKET}
+        AccessControl: Private
+
+    StorageBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        PolicyDocument:
+          Id: Policy
+          Version: "2012-10-17"
+          Statement:
+            - Sid: PublicReadWriteBucketPolicy
+              Effect: Allow
+              Principal: "*"
+              Action:
+                - s3:GetObject
+                - s3:PutObject
+              Resource: arn:aws:s3:::${self:provider.environment.STORAGE_BUCKET}/*
+        Bucket: !Ref StorageBucket
+
+    GraphDataTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: createdAt
+            AttributeType: S
+          - AttributeName: graphId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: graphId
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.GRAPH_DATA_TABLE}
+        LocalSecondaryIndexes:
+          - IndexName: ${self:provider.environment.GRAPH_DATA_LOCAL_INDEX}
+            KeySchema:
+              - AttributeName: userId
+                KeyType: HASH
+              - AttributeName: createdAt
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+        GlobalSecondaryIndexes:
+          - IndexName: ${self:provider.environment.GRAPH_DATA_GLOBAL_GRAPHID_INDEX}
+            KeySchema:
+              - AttributeName: userId
+                KeyType: HASH
+              - AttributeName: graphId
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL

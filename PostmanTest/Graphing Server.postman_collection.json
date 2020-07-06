@@ -1,0 +1,913 @@
+{
+	"info": {
+		"_postman_id": "1b76c5e8-1ec0-4d4f-8953-b480612fbd26",
+		"name": "Graphing Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Graphing Endpoint",
+			"item": [
+				{
+					"name": "Graph - Request Valid Url TextToSpeech",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/graph?url=https://gitlab.esrf.fr/accelerators/System/TextToSpeech/-/raw/master/TextToSpeech.xmi&format=png",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"graph"
+							],
+							"query": [
+								{
+									"key": "url",
+									"value": "https://gitlab.esrf.fr/accelerators/System/TextToSpeech/-/raw/master/TextToSpeech.xmi"
+								},
+								{
+									"key": "format",
+									"value": "png"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Graph - Request Valid Url HdbppHealthCheck",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/graph?url=https://raw.githubusercontent.com/tango-controls-hdbpp/hdbpp-timescale-project/master/components/hdbpp-health-check/src/HdbppHealthCheck.xmi&format=png",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"graph"
+							],
+							"query": [
+								{
+									"key": "url",
+									"value": "https://raw.githubusercontent.com/tango-controls-hdbpp/hdbpp-timescale-project/master/components/hdbpp-health-check/src/HdbppHealthCheck.xmi"
+								},
+								{
+									"key": "format",
+									"value": "png"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Graph - Request Invalid Url",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/graph?url=wwwfgdfgdafff&format=png",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"graph"
+							],
+							"query": [
+								{
+									"key": "url",
+									"value": "wwwfgdfgdafff"
+								},
+								{
+									"key": "format",
+									"value": "png"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Graph - Missing Query Params",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/graph",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"graph"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Graph - Resize",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/graph?url=https://github.com/tango-controls-hdbpp/hdbpp-timescale-project/blob/master/components/hdbpp-health-check/src/HdbppHealthCheck.xmi&format=png&resize=0.5",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"graph"
+							],
+							"query": [
+								{
+									"key": "url",
+									"value": "https://github.com/tango-controls-hdbpp/hdbpp-timescale-project/blob/master/components/hdbpp-health-check/src/HdbppHealthCheck.xmi"
+								},
+								{
+									"key": "format",
+									"value": "png"
+								},
+								{
+									"key": "resize",
+									"value": "0.5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Auth Test Token",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "Ry2x8SYyQLkxYam90c1rd6B6UauNVsj7",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/test",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Test Invalid Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/test",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Tango Graphing Server",
+			"item": [
+				{
+					"name": "Docker Server Test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{graph_server}}:8000/graph?input_url=https://gitlab.esrf.fr/accelerators/System/TextToSpeech/-/raw/master/TextToSpeech.xmi&format=png",
+							"host": [
+								"{{graph_server}}"
+							],
+							"port": "8000",
+							"path": [
+								"graph"
+							],
+							"query": [
+								{
+									"key": "input_url",
+									"value": "https://gitlab.esrf.fr/accelerators/System/TextToSpeech/-/raw/master/TextToSpeech.xmi"
+								},
+								{
+									"key": "format",
+									"value": "png"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Rest API",
+			"item": [
+				{
+					"name": "Invalid createGraph",
+					"item": [
+						{
+							"name": "createGraph No Body",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "accessToken",
+											"value": "{{auth_token}}",
+											"type": "string"
+										},
+										{
+											"key": "tokenType",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/createGraph",
+									"protocol": "https",
+									"host": [
+										"{{endpointId}}",
+										"execute-api",
+										"eu-west-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"dev",
+										"createGraph"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createGraph Incomplete Body",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "accessToken",
+											"value": "{{auth_token}}",
+											"type": "string"
+										},
+										{
+											"key": "tokenType",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Test Graph\",\n    \"description\": \"A test graph from postman\",\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/createGraph",
+									"protocol": "https",
+									"host": [
+										"{{endpointId}}",
+										"execute-api",
+										"eu-west-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"dev",
+										"createGraph"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Invalid delete",
+					"item": [
+						{
+							"name": "delete No graphId",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "accessToken",
+											"value": "{{auth_token}}",
+											"type": "string"
+										},
+										{
+											"key": "tokenType",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/delete:graphId",
+									"protocol": "https",
+									"host": [
+										"{{endpointId}}",
+										"execute-api",
+										"eu-west-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"dev",
+										"delete:graphId"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete Invalid graphId",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "accessToken",
+											"value": "{{auth_token}}",
+											"type": "string"
+										},
+										{
+											"key": "tokenType",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/delete/:graphId",
+									"protocol": "https",
+									"host": [
+										"{{endpointId}}",
+										"execute-api",
+										"eu-west-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"dev",
+										"delete",
+										":graphId"
+									],
+									"variable": [
+										{
+											"key": "graphId",
+											"value": "invalid"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Invalid getGraph",
+					"item": [
+						{
+							"name": "getGraph Invalid graphId",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "accessToken",
+											"value": "{{auth_token}}",
+											"type": "string"
+										},
+										{
+											"key": "tokenType",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/getGraph/:graphId",
+									"protocol": "https",
+									"host": [
+										"{{endpointId}}",
+										"execute-api",
+										"eu-west-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"dev",
+										"getGraph",
+										":graphId"
+									],
+									"variable": [
+										{
+											"key": "graphId",
+											"value": "{{invalid_graph_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "createGraph",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "{{auth_token}}",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Graph\",\n    \"description\": \"A test graph from postman\",\n    \"sourceUrl\": \"https://gitlab.esrf.fr/accelerators/System/TextToSpeech/-/raw/master/TextToSpeech.xmi\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/createGraph",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"createGraph"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "{{auth_token}}",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/delete/:graphId",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"delete",
+								":graphId"
+							],
+							"variable": [
+								{
+									"key": "graphId",
+									"value": "{{graph_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateGraph",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "{{auth_token}}",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"A New Graph\",\n    \"description\": \"A new description\",\n    \"sourceUrl\": \"https://raw.githubusercontent.com/tango-controls-hdbpp/hdbpp-timescale-project/master/components/hdbpp-health-check/src/HdbppHealthCheck.xmi\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/updateGraph/:graphId",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"updateGraph",
+								":graphId"
+							],
+							"variable": [
+								{
+									"key": "graphId",
+									"value": "{{graph_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getGraph",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "{{auth_token}}",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/getGraph/:graphId",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"getGraph",
+								":graphId"
+							],
+							"variable": [
+								{
+									"key": "graphId",
+									"value": "{{graph_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getGraphs",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "{{auth_token}}",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{endpointId}}.execute-api.eu-west-1.amazonaws.com/dev/getGraphs",
+							"protocol": "https",
+							"host": [
+								"{{endpointId}}",
+								"execute-api",
+								"eu-west-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"getGraphs"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessToken",
+				"value": "ttdVJh88t0JBrcTfs_XHg4Yq0XOs4QiC",
+				"type": "string"
+			},
+			{
+				"key": "tokenType",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "85fe6f25-241e-4163-bc8d-ce97e21ba9d3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "fe7db654-7daa-4ca9-8dbd-ba7cda0832ae",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ee02b80d-4249-4b34-8aa2-6ce3c65fe23f",
+			"key": "endpointId",
+			"value": ""
+		},
+		{
+			"id": "c0f84b1b-5c8b-4949-bd64-ae807004e40b",
+			"key": "graph_server",
+			"value": "localhost"
+		},
+		{
+			"id": "e1b57168-29aa-468e-bab4-b9c745907c93",
+			"key": "auth_token",
+			"value": ""
+		},
+		{
+			"id": "10c81299-0a2f-4df6-9e13-e023b1b80260",
+			"key": "graph_id",
+			"value": ""
+		},
+		{
+			"id": "03446f14-7367-4e6d-a4db-b09ea0ba9e94",
+			"key": "invalid_graph_id",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
