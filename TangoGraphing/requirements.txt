@@ -3,4 +3,3 @@ graphviz
 falcon
 gunicorn
 requests
-boto3

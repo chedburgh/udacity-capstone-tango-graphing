@@ -3,12 +3,15 @@
 - [udacity-capstone-tango-graphing](#udacity-capstone-tango-graphing)
   - [Project](#project)
     - [Live Graphing Endpoint](#live-graphing-endpoint)
-    - [REST API](#rest-api)
+    - [Rest API](#rest-api)
   - [Structure](#structure)
   - [Monitoring](#monitoring)
+  - [Deployment](#deployment)
+    - [Fargate Webserver](#fargate-webserver)
+    - [Rest API](#rest-api-1)
   - [Postman Collection](#postman-collection)
     - [Graphing Endpoint](#graphing-endpoint)
-    - [Rest API](#rest-api-1)
+    - [Rest API](#rest-api-2)
       - [Test Sequence](#test-sequence)
 
 Captone project for Cloud Developer course. This REST API demonstrates Option 2 for the review criteria.
@@ -25,9 +28,11 @@ An endpoint is provided to access the Fargate graphing webserver and graph devic
 
 Only png and svg image formats are supported currently.
 
-A proposed frontend would be a stream of the latest graphs, but this does not fulfil the project rubric. 
+A proposed frontend would be a stream of the latest graphs, but this does not fulfil the project rubric.
 
-### REST API
+The Fargate cluster is running the webserver under [TangoGraphing](TangoGraphing). This is a python based webserver running with Falcon/Gunicorn. 
+
+### Rest API
 
 A small REST API is build around the server to demonstrate a social media style API of creating, deleting, updating graphs for a unique user. Its built on top of functionality in the Live Graphing Endpoint.
 
@@ -42,6 +47,37 @@ It should be noted that since no domain names are used, redeploying the Fargate 
 ## Monitoring
 
 The deployment has Tracing enable (see [screenshots](screenshots) an image) and logging to CloudWatch to debug issues.
+
+## Deployment
+
+The two component parts need deploying separately.
+
+### Fargate Webserver
+
+See notes under [Fargate](Fargate).
+
+### Rest API
+
+Deployment is via serverless as follows.
+
+Clone the repo:
+
+```bash
+git clone  https://github.com/chedburgh/udacity-capstone-tango-graphing.git
+cd udacity-capstone-tango-graphing
+```
+
+Install the modules:
+
+```bash
+npm install
+```
+
+Deploy:
+
+```bash
+sls deploy -v
+```
 
 ## Postman Collection
 
@@ -59,7 +95,7 @@ The simplest way is to use an auth0 test token as follows:
 - Click APIs -> Auth0 Management API -> Test
 - Copy the response token and paste this into the auth_token variable in Postman.
 
-#### Test Sequence 
+#### Test Sequence
 
 A typical test sequence is as follows:
 

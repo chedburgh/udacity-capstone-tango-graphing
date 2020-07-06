@@ -1,13 +1,15 @@
+#!/usr/bin/env python3
+
 import pytest
 from graphviz import Graph
 from lxml import objectify, etree
-from xmi_to_dot import get_inherited_status
-from xmi_to_dot import get_access
-from xmi_to_dot import get_type
-from xmi_to_dot import add_attribute
-from xmi_to_dot import add_command
-from xmi_to_dot import add_state
-from xmi_to_dot import add_pipe
+from graph import get_inherited_status
+from graph import get_access
+from graph import get_type
+from graph import add_attribute
+from graph import add_command
+from graph import add_state
+from graph import add_pipe
 
 def testCanAssert():
     assert True

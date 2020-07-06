@@ -1,9 +1,36 @@
-test run:
+# Tango Graphing
 
-docker run -it -e INPUT_BUCKET=tango-graphing-staging-sjames-dev -e OUTPUT_BUCKET=tango-graphing-storage-sjames-dev -e INPUT_FILE_FORMAT=xmi -e OUTPUT_FILE_FORMAT=png -e FILENAME=HdbppHealthCheck.xmi chedburgh/tango-device-graphing:latest
+Simple webserver built on Falcon. The webserver integrates the graph functionality to offer it via an endpoint.
 
+## Tests
 
-https://tango-graphing-staging-sjames-dev.s3-eu-west-1.amazonaws.com
-https://tango-graphing-storage-sjames-dev.s3-eu-west-1.amazonaws.com
+Run as follows:
 
-tango-graphing-staging-sjames-dev tango-graphing-storage-sjames-dev hello.xmi xmi png 
+```bash
+python -m venv env
+pip3 install -r requirements.txt
+pytest3
+```
+
+## Docker Image
+
+To build the image:
+
+```bash
+cd docker
+make clean; make
+```
+
+The image can be pushed to docker hub as follows:
+
+```bash
+make push
+```
+
+Test the docker image as follows:
+
+```bash
+docker run -it -p 8000:8000 chedburgh/tango-device-graphing:latest
+```
+
+Then query the webserver with a get request. A request is available in the Postman collection.

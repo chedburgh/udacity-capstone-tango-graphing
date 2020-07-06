@@ -6,7 +6,7 @@ default: image
 ./build-files/.built: Dockerfile
 	mkdir -p build-files
 	cp ../requirements.txt build-files/
-	cp ../graph_cmd.py build-files/
+	cp ../graph.py build-files/
 	cp ../graph_endpoint.py build-files/
 	cp ../app.py build-files/
 	docker build -t ${NAME} .

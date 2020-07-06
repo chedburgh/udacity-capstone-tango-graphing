@@ -9,18 +9,11 @@ WORKDIR /app
 
 COPY build-files/requirements.txt \
     build-files/app.py \
-    build-files/graph_cmd.py \
+    build-files/graph.py \
     build-files/graph_endpoint.py \
     /app/
 
 RUN pip3 install --upgrade pip
 RUN pip3 install -r /app/requirements.txt
-
-#ENTRYPOINT /cmd/graph_xmi.py \
-#    ${INPUT_BUCKET} \
-#    ${OUTPUT_BUCKET} \
-#    ${FILENAME} \
-#    ${INPUT_FILE_FORMAT} \
-#    ${OUTPUT_FILE_FORMAT}
 
 ENTRYPOINT ["gunicorn", "--workers=2", "--threads=4", "--bind", "0.0.0.0:8000", "app:api"]

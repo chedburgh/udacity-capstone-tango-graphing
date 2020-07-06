@@ -5,7 +5,7 @@ import requests
 import io
 import logging
 
-from graph_cmd import graph_file
+from graph import graph_file
 
 logger = logging.getLogger("graphing-server")
 
