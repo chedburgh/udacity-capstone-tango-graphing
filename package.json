@@ -28,7 +28,7 @@
   "dependencies": {
     "@types/axios": "^0.14.0",
     "aws-xray-sdk": "^3.0.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "got": "^11.3.0",
     "jsonwebtoken": "^8.5.1",
