@@ -16,7 +16,7 @@
     "@types/request": "^2.48.5",
     "@types/request-promise-native": "^1.0.17",
     "@types/uuid": "^8.0.0",
-    "aws-sdk": "^2.696.0",
+    "aws-sdk": "^2.814.0",
     "serverless-aws-documentation": "^1.1.0",
     "serverless-iam-roles-per-function": "^2.0.2",
     "serverless-pseudo-parameters": "^2.5.0",
